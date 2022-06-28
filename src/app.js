@@ -10,6 +10,8 @@ const app = express();
 db.authenticate().then((result) => {
     console.log("database connected");
 }).catch((err) => {
+    console.log(err);
+    console.log(process.env.DB_PASSWORD);
     console.log("Error");
 });
 // db.sync({ force: true });

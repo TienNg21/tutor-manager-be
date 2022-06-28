@@ -1,7 +1,7 @@
 const Sequelize = require('sequelize');
 const db = require('../config/db.config');
 
-const User = db.define('user', {
+const User = db.define('users', {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
@@ -38,10 +38,12 @@ const User = db.define('user', {
     citizenId: {
         type: Sequelize.STRING,
         allowNull: false,
+        field: 'citizen_id'
     },
     phoneNumber: {
         type: Sequelize.STRING,
         allowNull: false,
+        field: 'phone_number'
     },
     rating: {
         type: Sequelize.INTEGER,
@@ -49,8 +51,8 @@ const User = db.define('user', {
     },
     description: {
         type: Sequelize.STRING,
-        allowNull: true,
-        defaultValue: null,
+        allowNull: false,
+        defaultValue: '',
     },
     gender: {
         type: Sequelize.BOOLEAN,
@@ -69,27 +71,44 @@ const User = db.define('user', {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: true,
+        field: 'open_to_work'
     },
     newEmail: {
         type: Sequelize.STRING,
         allowNull: true,
         defaultValue: null,
+        field: 'new_email'
     },
     confirmToken: {
         type: Sequelize.STRING,
         allowNull: true,
-        defaultValue: null,
+        field: 'confirm_token'
     },
     resetPasswordToken: {
         type: Sequelize.STRING,
         allowNull: true,
         defaultValue: null,
+        field: 'reset_password_token'
     },
     deleted: {
         type: Sequelize.BOOLEAN,
         allowNull: true,
         defaultValue: false,
+    },
+    createdAt: {
+        allowNull: false,
+        defaultValue: Sequelize.fn('now'),
+        type: Sequelize.DATE,
+        field: 'created_at'
+    },
+    updatedAt: {
+        allowNull: false,
+        defaultValue: Sequelize.fn('now'),
+        type: Sequelize.DATE,
+        field: 'updated_at'
     }
+}, {
+    timestamps: false
 })
 
 module.exports = User;

@@ -11,7 +11,7 @@ const register = async (request) => {
         const isUserExist = await User.findOne({
             where: {
                 email: request.body.email,
-                deleted: 0,
+                deleted: false,
             }
         });
 
@@ -71,7 +71,7 @@ const login = async (request) => {
         const isUserExist = await User.findOne({
             where: {
                 email: request.body.email,
-                deleted: 0,
+                deleted: false,
             }
         });
 
@@ -113,8 +113,8 @@ const confirm = async (request) => {
         const isUserExist = await User.findOne({
             where: {
                 confirmToken: request.params.confirmToken,
-                confirmed: 0,
-                deleted: 0,
+                confirmed: false,
+                deleted: false,
             }
         });
 
@@ -125,24 +125,19 @@ const confirm = async (request) => {
         if (isUserExist.dataValues.newEmail) {
             // confirm update email
             const updatedUser = await User.update({
-                confirmed: 1,
-                confirmToken: null,
+                confirmed: true,
+                confirmToken: '',
                 email: data.newEmail,
-                newEmail: null,
+                newEmail: '',
             }, {
                 where: { id: data.id }
             })
-            const newData = updatedUser.dataValues;
-            delete newData.password;
-            delete newData.confirmed;
-            delete newData.blocked;
-            delete newData.newEmail;
-            delete newData.confirmToken;
+            const newData = { message: "success" }
             return transformSuccessResponse(newData);
         } else {
             // confirm create account
             const updatedUser = await User.update({
-                confirmed: 1,
+                confirmed: true,
                 confirmToken: null
             }, {
                 where: { id: data.id }
@@ -167,8 +162,8 @@ const changeEmail = async (request) => {
         const isUserExist = await User.findOne({
             where: {
                 id: request.body.authId,
-                confirmed: 1,
-                deleted: 0,
+                confirmed: true,
+                deleted: false,
             }
         });
 
@@ -183,7 +178,7 @@ const changeEmail = async (request) => {
         const isEmailExist = await await User.findOne({
             where: {
                 email: request.body.newEmail,
-                deleted: 0,
+                deleted: false,
             }
         });
 
@@ -195,7 +190,7 @@ const changeEmail = async (request) => {
 
         const isChangeEmailSuccess = await User.update({
             newEmail: request.body.newEmail,
-            deleted: 0,
+            deleted: false,
         }, {
             where: {
                 id: request.body.authId
@@ -227,7 +222,7 @@ const forgotPassword = async (request) => {
         const isEmailExist = await await User.findOne({
             where: {
                 email: request.body.email,
-                deleted: 0,
+                deleted: false,
             }
         });
         if (!isEmailExist) {
@@ -246,7 +241,7 @@ const forgotPassword = async (request) => {
         }, {
             where: {
                 email: request.body.email,
-                deleted: 0,
+                deleted: false,
             }
         }).then(async (result) => {
             const message = `Mã đặt lại mật khẩu của bạn là ${resetPasswordToken}`
@@ -269,7 +264,7 @@ const resetPassword = async (request) => {
         const isUserExist = await User.findOne({
             where: {
                 resetPasswordToken: request.body.token,
-                deleted: 0,
+                deleted: false,
             }
         });
         if (!isUserExist) {
@@ -283,7 +278,7 @@ const resetPassword = async (request) => {
         }, {
             where: {
                 id: isUserExist.dataValues.id,
-                deleted: 0,
+                deleted: false,
             }
         });
 

@@ -17,6 +17,7 @@ const District = db.define('district', {
     provinceId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        field: 'province_id'
     }
 }, {
     timestamps: false

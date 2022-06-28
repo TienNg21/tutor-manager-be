@@ -17,10 +17,12 @@ const Ward = db.define('ward', {
     provinceId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        field: 'province_id'
     },
     districtId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        field: 'district_id'
     }
 }, {
     timestamps: false

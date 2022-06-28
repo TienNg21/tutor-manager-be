@@ -8,28 +8,30 @@ CREATE TABLE users (
 	province int not null,
 	district int not null,
 	ward int not null,
-	citizenId varchar not null,
-	phoneNumber varchar not null,
+	citizen_id varchar not null,
+	phone_number varchar not null,
 	rating int not null,
 	description varchar not null,
 	gender boolean not null,
 	confirmed boolean not null default false,
-	openToWork boolean not null default true,
+	open_to_work boolean not null default true,
 	blocked boolean not null default false,
-	newEmail varchar,
-	confirmToken varchar,
-	resetPasswordToken varchar,
-	deleted boolean default false
+	new_email varchar,
+	confirm_token varchar,
+	reset_password_token varchar,
+	deleted boolean default false,
+	created_at date,
+	updated_at date,
 );
 CREATE TABLE students (
 	id serial not null primary key,
 	name varchar not null,
 	gender boolean not null,
 	grade int not null,
-	userId int not null,
+	user_id int not null,
 	deleted boolean default false,
-    createdAt date,
-    updatedAt date
+    created_at date,
+    updated_at date
 );
 
 CREATE TABLE classes (
@@ -41,33 +43,30 @@ CREATE TABLE classes (
 	province int not null,
 	district int not null,
 	ward int not null,
-	userId int not null,
-	studentId int not null,
-    isPublish boolean default false,
+	user_id int not null,
+	student_id int not null,
+    is_publish boolean default false,
 	deleted boolean default false,
-    createdAt date,
-    updatedAt date
+    created_at date,
+    updated_at date
 );
 
-
-
-
-CREATE TABLE requiredClasses (
+CREATE TABLE required_classes (
 	id serial not null primary key,
 	grade int not null,
     code varchar not null,
 	subject varchar not null,
-	minSalary int not null,
-	maxSalary int not null,
+	min_salary int not null,
+	max_salary int not null,
 	province int not null,
 	district int not null,
 	ward int not null,
-	userId int,
-	studentId int,
-    isPublish boolean default false,
+	user_id int,
+	student_id int,
+    is_publish boolean default false,
 	deleted boolean default false,
-    createdAt date,
-    updatedAt date
+    created_at date,
+    updated_at date
 );
 
 -- not use
@@ -92,7 +91,7 @@ CREATE TABLE districts (
   id int NOT NULL,
   name varchar ,
   prefix varchar,
-  provinceId int DEFAULT NULL
+  province_id int DEFAULT NULL
 );
 
 CREATE TABLE provinces (
@@ -105,6 +104,6 @@ CREATE TABLE wards (
  id int NOT NULL,
  name varchar NOT NULL,
  prefix varchar DEFAULT NULL,
- provinceId int DEFAULT NULL,
- districtId int DEFAULT NULL
+ province_id int DEFAULT NULL,
+ district_id int DEFAULT NULL
 );

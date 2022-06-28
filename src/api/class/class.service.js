@@ -11,8 +11,8 @@ const createClass = async (request) => {
         const isUserExist = await User.findOne({
             where: {
                 id: request.body.authId,
-                confirmed: 1,
-                deleted: 0,
+                confirmed: true,
+                deleted: false,
             }
         });
 
@@ -66,7 +66,7 @@ const getClasses = async (request) => {
     try {
         const pagination = request?.query?.pagination;
         let query = {
-            deleted: 0,
+            deleted: false,
             userId: request.body.authId,
         }
 
@@ -118,7 +118,7 @@ const getClassById = async (request) => {
             where: {
                 id: request.params.ClassId,
                 userId: request.body.authId,
-                deleted: 0,
+                deleted: false,
             }
         });
 
@@ -138,7 +138,7 @@ const updateClass = async (request) => {
             where: {
                 id: request.params.ClassId,
                 userId: request.body.authId,
-                deleted: 0,
+                deleted: false,
             }
         });
         if (!classes) {
@@ -166,7 +166,7 @@ const updateClass = async (request) => {
             where: {
                 userId: request.body.authId,
                 id: request.params.ClassId,
-                deleted: 0,
+                deleted: false,
             }
         })
 
@@ -193,7 +193,7 @@ const deleteClass = async (request) => {
             where: {
                 id: request.params.ClassId,
                 userId: request.body.authId,
-                deleted: 0,
+                deleted: false,
             }
         });
 
@@ -203,12 +203,12 @@ const deleteClass = async (request) => {
         }
 
         const updateClass = await Class.update({
-            deleted: 1,
+            deleted: true,
         }, {
             where: {
                 userId: request.body.authId,
                 id: request.params.ClassId,
-                deleted: 0,
+                deleted: false,
             }
         })
 

@@ -4,7 +4,8 @@ const db = require('../config/db.config');
 const Class = db.define('class', {
     id: {
         type: Sequelize.INTEGER,
-        primaryKey: true
+        primaryKey: true,
+        autoIncrement: true
     },
     grade: {
         type: Sequelize.INTEGER,
@@ -37,16 +38,32 @@ const Class = db.define('class', {
     userId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        field: 'user_id'
     },
     studentId: {
         type: Sequelize.INTEGER,
         allowNull: false,
+        field: 'student_id'
     },
     deleted: {
         type: Sequelize.BOOLEAN,
         allowNull: true,
         defaultValue: false,
+    },
+    createdAt: {
+        allowNull: false,
+        defaultValue: Sequelize.fn('now'),
+        type: Sequelize.DATE,
+        field: 'created_at'
+    },
+    updatedAt: {
+        allowNull: false,
+        defaultValue: Sequelize.fn('now'),
+        type: Sequelize.DATE,
+        field: 'updated_at'
     }
+}, {
+    timestamps: false
 })
 
 module.exports = Class;

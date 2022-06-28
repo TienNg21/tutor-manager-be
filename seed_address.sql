@@ -1,4 +1,4 @@
-INSERT INTO districts (id, name, prefix, provinceId) VALUES
+INSERT INTO districts (id, name, prefix, province_id) VALUES
 (1, 'Bình Chánh', 'Huyện', 1),
 (2, 'Bình Tân', 'Quận', 1),
 (3, 'Bình Thạnh', 'Quận', 1),
@@ -774,7 +774,7 @@ INSERT INTO provinces (id, name, code) VALUES
 (62, 'Bắc Kạn', 'BK'),
 (63, 'Cao Bằng', 'CB');
 
-INSERT INTO wards (id, name, prefix, provinceId, districtId) VALUES
+INSERT INTO wards (id, name, prefix, province_id, district_id) VALUES
 (1, 'An Phú Tây', 'Xã', 1, 1),
 (2, 'Bình Chánh', 'Xã', 1, 1),
 (3, 'Bình Hưng', 'Xã', 1, 1),

@@ -22,8 +22,8 @@ const createRequiredClass = async (request) => {
         const isUserExist = await User.findOne({
             where: {
                 id: request.body.authId,
-                confirmed: 1,
-                deleted: 0,
+                confirmed: true,
+                deleted: false,
             }
         });
 
@@ -64,7 +64,7 @@ const getRequiredClasses = async (request) => {
         const private = request?.query?.private;
 
         let query = {
-            deleted: 0,
+            deleted: false,
         }
         if (private) {
             query = {
@@ -137,7 +137,7 @@ const getRequiredClassById = async (request) => {
             where: {
                 id: request.params.requiredClassId,
                 userId: request.body.authId,
-                deleted: 0,
+                deleted: false,
             }
         });
 
@@ -157,7 +157,7 @@ const updateRequiredClass = async (request) => {
             where: {
                 id: request.params.requiredClassId,
                 userId: request.body.authId,
-                deleted: 0,
+                deleted: false,
             }
         });
         if (!requiredClasses) {
@@ -185,7 +185,7 @@ const updateRequiredClass = async (request) => {
             where: {
                 userId: request.body.authId,
                 id: request.params.requiredClassId,
-                deleted: 0,
+                deleted: false,
             }
         })
 
@@ -212,7 +212,7 @@ const deleteRequiredClass = async (request) => {
             where: {
                 id: request.params.requiredClassId,
                 userId: request.body.authId,
-                deleted: 0,
+                deleted: false,
             }
         });
 
@@ -222,12 +222,12 @@ const deleteRequiredClass = async (request) => {
         }
 
         const updateRequiredClass = await RequiredClass.update({
-            deleted: 1,
+            deleted: true,
         }, {
             where: {
                 userId: request.body.authId,
                 id: request.params.requiredClassId,
-                deleted: 0,
+                deleted: false,
             }
         })
 

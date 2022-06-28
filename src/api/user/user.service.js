@@ -8,7 +8,7 @@ const getUserProfile = async (request) => {
         const isUserExist = await User.findOne({
             where: {
                 id: request.body.authId,
-                deleted: 0
+                deleted: false
             }
         })
 
@@ -37,7 +37,7 @@ const updateProfile = async (request) => {
         const isUserExist = await User.findOne({
             where: {
                 id: request.body.authId,
-                deleted: 0
+                deleted: false
             }
         })
 
@@ -52,7 +52,7 @@ const updateProfile = async (request) => {
         }, {
             where: {
                 id: request.body.authId,
-                deleted: 0
+                deleted: false
             }
         });
 
@@ -63,7 +63,7 @@ const updateProfile = async (request) => {
         const newUser = await User.findOne({
             where: {
                 id: request.body.authId,
-                deleted: 0
+                deleted: false
             }
         })
 
@@ -86,7 +86,7 @@ const changePassword = async (request) => {
         const isUserExist = await User.findOne({
             where: {
                 id: request.body.authId,
-                deleted: 0
+                deleted: false
             }
         })
 
@@ -107,7 +107,7 @@ const changePassword = async (request) => {
         }, {
             where: {
                 id: request.body.authId,
-                deleted: 0
+                deleted: false
             }
         })
         if (!isChangePasswordSuccess) {

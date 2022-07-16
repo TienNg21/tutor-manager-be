@@ -4,6 +4,8 @@ const Ward = require("../../../database/models/Ward");
 const RequiredClass = require("../../../database/models/RequiredClass");
 const User = require("../../../database/models/User");
 const { Op } = require("sequelize");
+const Province = require("../../../database/models/Province");
+const District = require("../../../database/models/District");
 
 const createRequiredClass = async (request) => {
     try {
@@ -122,7 +124,40 @@ const getRequiredClasses = async (request) => {
             return transformErrorResponse(HttpStatus.BAD_REQUEST, 'Không thể tìm thấy danh sách yêu cầu lớp học', 'required-classes');
         }
 
-        return transformSuccessResponse(requiredClasses.rows, requiredClasses.count);
+        const data = await Promise.all(requiredClasses.rows.map(async (requiredClass) => {
+            const province = await Province.findOne({
+                where: {
+                    id: requiredClass.province,
+                }
+            })
+            if (!province) {
+                return transformErrorResponse(HttpStatus.BAD_REQUEST, 'Không thấy yêu cầu lớp học phù hợp', 'required-classes');
+            }
+            requiredClass.province = { ...province.dataValues };
+
+            const district = await District.findOne({
+                where: {
+                    id: requiredClass.district,
+                }
+            })
+            if (!district) {
+                return transformErrorResponse(HttpStatus.BAD_REQUEST, 'Không thấy yêu cầu lớp học phù hợp', 'required-classes');
+            }
+            requiredClass.district = { ...district.dataValues };
+
+            const ward = await Ward.findOne({
+                where: {
+                    id: requiredClass.ward,
+                }
+            })
+            if (!ward) {
+                return transformErrorResponse(HttpStatus.BAD_REQUEST, 'Không thấy yêu cầu lớp học phù hợp', 'required-classes');
+            }
+            requiredClass.ward = { ...ward.dataValues };
+
+            return requiredClass;
+        }));
+        return transformSuccessResponse(data, requiredClasses.count);
     } catch (error) {
         console.log(error);
         return transformErrorResponse(HttpStatus.BAD_REQUEST, 'Lấy danh sách yêu cầu lớp học không thành công', 'required-classes');
@@ -145,7 +180,41 @@ const getRequiredClassById = async (request) => {
             return transformErrorResponse(HttpStatus.BAD_REQUEST, 'Không thấy yêu cầu lớp học phù hợp', 'required-classes');
         }
 
-        return transformSuccessResponse(requiredClasses.rows, requiredClasses.count);
+        const data = await Promise.all(requiredClasses.rows.map(async (requiredClass) => {
+            const province = await Province.findOne({
+                where: {
+                    id: requiredClass.province,
+                }
+            })
+            if (!province) {
+                return transformErrorResponse(HttpStatus.BAD_REQUEST, 'Không thấy yêu cầu lớp học phù hợp', 'required-classes');
+            }
+            requiredClass.province = { ...province.dataValues };
+
+            const district = await District.findOne({
+                where: {
+                    id: requiredClass.district,
+                }
+            })
+            if (!district) {
+                return transformErrorResponse(HttpStatus.BAD_REQUEST, 'Không thấy yêu cầu lớp học phù hợp', 'required-classes');
+            }
+            requiredClass.district = { ...district.dataValues };
+
+            const ward = await Ward.findOne({
+                where: {
+                    id: requiredClass.ward,
+                }
+            })
+            if (!ward) {
+                return transformErrorResponse(HttpStatus.BAD_REQUEST, 'Không thấy yêu cầu lớp học phù hợp', 'required-classes');
+            }
+            requiredClass.ward = { ...ward.dataValues };
+
+            return requiredClass;
+        }));
+
+        return transformSuccessResponse(data, requiredClasses.count);
     } catch (error) {
         return transformErrorResponse(HttpStatus.BAD_REQUEST, 'Không thấy yêu cầu lớp học phù hợp', 'required-classes');
     }

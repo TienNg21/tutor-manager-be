@@ -22,13 +22,15 @@ const updateProfile = (request) => {
         authId: Joi.number().required(),
         name: Joi.string(),
         address: Joi.string(),
-        citizenIdentification: Joi.string(),
+        citizenId: Joi.string(),
         phoneNumber: Joi.string(),
-        description: Joi.string(),
+        description: Joi.string().optional(),
         rating: Joi.number(),
         openToWork: Joi.boolean(),
         gender: Joi.boolean(),
-        verified: Joi.boolean(),
+        ward: Joi.number(),
+        district: Joi.number(),
+        province: Joi.number(),
     })
 
     const { error } = schema.validate(request.body);
